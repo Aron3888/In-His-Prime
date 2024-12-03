@@ -27,11 +27,7 @@ selector([[M1, D1, S1], [M2, D2, S2]]) :-
     primeday(M1, T3), primeday(M2, U3),
     mondaysinmonth(D1, S1, T4), mondaysinmonth(D2, S2, U4),
     primesaturdays(D1, S1, T5), primesaturdays(D2, S2, U5),
-    different([T1, U1]),
-    different([T2, U2]),
-    different([T3, U3]),
-    different([T4, U4]),
-    different([T5, U5]),
+    T1 \= U1, T2 \= U2, T3 \= U3, T4 \= U4, T5 \= U5,
     prime(T1 + T2 + T3 + T4 + T5),
     prime(U1 + U2 + U3 + U4 + U5).
 
@@ -47,7 +43,7 @@ monthnumbers(8, "August").
 monthnumbers(9, "September").
 monthnumbers(10, "October").
 monthnumbers(11, "November").
-mmonthnumbersn(12, "December").
+monthnumbers(12, "December").
 
 % provide month names and their lengths
 monthlen(M, Length) :-
@@ -66,19 +62,17 @@ factorisable(F, N)
      F1 is F + 1,
      factorisable(F1, N).
 
+% finds all the prime days in a month
 primeday(D, X) :-
     findall(Day, (between(1, D, Day), prime(Day)), Y),
     length(Y, X).
 
+% finds all the prime saturdays in a month
 primesaturdays(D, S, X) :-
     findall(Day, (between(1, D, Day), prime(Day), (Day + S - 1) mod 7 =:= 6), PS),
     length(PS, X).
 
+% finds all the mondays in a month
 mondaysinmonth(D, S, X) :-
     mondays(D, S, Y),
     length(Y, X).
-
-different([]).
-different([X|XS]) :-
-    \+ member(X, XS),
-    different(XS).
