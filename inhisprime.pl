@@ -20,7 +20,20 @@ mnd(M, 30) :- member(M, [4, 6, 9, 11]).
 mnd(2, 28).
 mnd(2, 29).
 
-
+-- fliters all conditions
+selector4([[M1, D1, S1], [M2, D2, S2]]) :-
+    D1 = T1, D2 = U1,
+    monthl(M1, T2), monthl(M2, U2),
+    primed(M1, T3), primed(M2, U3),
+    cmondays(D1, S1, T4), cmondays(D2, S2, U4),
+    psaturdays(D1, S1, T5), psaturdays(D2, S2, U5),
+    different([T1, U1]),
+    different([T2, U2]),
+    different([T3, U3]),
+    different([T4, U4]),
+    different([T5, U5]),
+    prime(T1 + T2 + T3 + T4 + T5),
+    prime(U1 + U2 + U3 + U4 + U5).
 
 -- maps month numbers
 mn(1, "January").
@@ -52,3 +65,20 @@ factorisable(F, N)
   :- F*F =< N,
      F1 is F + 1,
      factorisable(F1, N).
+
+primed(D, X) :-
+    findall(Day, (between(1, D, Day), prime(Day)), Y),
+    length(Y, X).
+
+psaturdays(D, S, X) :-
+    findall(Day, (between(1, D, Day), prime(Day), (Day + S - 1) mod 7 =:= 6), PS),
+    length(PS, X).
+
+cmondays(D, S, X) :-
+    mondays(D, S, Y),
+    length(Y, X).
+
+different([]).
+different([X|XS]) :-
+    \+ member(X, XS),
+    different(XS).
