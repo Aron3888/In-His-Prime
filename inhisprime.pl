@@ -1,14 +1,17 @@
 main
   :- generator(X), selector(X), write(X).
 
+-- calculates specific day properties in a month
 mondays(D, S, X) :-
     findall(Day, (between(1, D, Day), (((Day + S - 2) mod 7) + 1) =:= 1), X).
-    
+
+-- provides month names and their lengths.
 mnd(M, 31) :- member(M, [1, 3, 5, 7, 8, 10, 12]).
 mnd(M, 30) :- member(M, [4, 6, 9, 11]).
 mnd(2, 28).
 mnd(2, 29).
 
+-- generates pairs of consecutive months list
 generator([[M1, D1, S1], [M2, D2, S2]]) :-
     between(1, 12, M1),
     M2 is (M1 mod 12) + 1,
@@ -17,6 +20,7 @@ generator([[M1, D1, S1], [M2, D2, S2]]) :-
     between(1, 7, S1),
     S2 is (S1 + D1 - 1) mod 7 + 1.
 
+-- maps month numbers
 mn(1, "January").
 mn(2, "February").
 mn(3, "March").
@@ -30,10 +34,12 @@ mn(10, "October").
 mn(11, "November").
 mn(12, "December").
 
+-- provide month names and their lengths
 monthl(M, Length) :-
     mn(M, Name),
     atom_length(Name, Length).
 
+-- check if a number is prime
 prime(N)
   :- N > 1, \+ factorisable(2, N ).
 
