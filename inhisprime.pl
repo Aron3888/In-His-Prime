@@ -11,7 +11,7 @@ generator([[M1, D1, S1], [M2, D2, S2]]) :-
     T is D1 mod 7,
     addWrap(7, S1, T, S2).
     
-% Wrap-around addition with modulo logic for months and weekdays
+% Wrap-around addition
 addWrap(Limit, P, Q, R) :-
     T is P + Q,
     (T > Limit -> R is T - Limit; R is T).
@@ -55,6 +55,7 @@ monthlen(M, Length) :-
     monthnumbers(M, Name),
     atom_length(Name, Length).
 
+% prime days in a month
 primes(28, 9).
 primes(29, 10).
 primes(30, 10).
@@ -83,7 +84,7 @@ primeSaturdays(D, S, US)
 
 % check if a number is prime
 prime(N)
-  :- N > 1, \+ factorisable(2, N ).
+  :- N > 1, \+ factorisable(2, N).
 
 factorisable(F, N)
   :- F*F =< N,
