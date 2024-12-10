@@ -14,3 +14,5 @@ The answer given by the newspaper was February, Monday or Friday
 I used Prolog language to solve this problem and printed the answer [[2,29,1],[3,31,2]]. After pressing NEXT, it should print [[2,29,5],[3,31,6]]. Or perhaps these are printed the other way around. 
 
 Either way, after pressing NEXT again, it should print nothing more. The two correct answers may then be read off directly — in a 29-day month, the start day and the finish day are the same.
+
+**Three testers in tests file ensure that your code can run correctly.**
